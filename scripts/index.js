@@ -6,17 +6,24 @@ const createCard = (cardInfo, deleteCard) => {
     const deleteButton = cardElement.querySelector(".card__delete-button")
 
     cardElement.querySelector(".card__image").src = cardInfo.link
+    cardElement.querySelector(".card__image").alt = cardInfo.name
     cardElement.querySelector(".card__title").textContent = cardInfo.name
 
     deleteButton.addEventListener("click", deleteCard)
 
-    return placesList.append(cardElement)
+    return cardElement
 }
 
 const deleteCard = (evt) => {
-    const card = evt.target.parentNode
+    const card = evt.target.closest(".places__item")
 
     return card.remove()
 }
 
-initialCards.map((card) => createCard(card, deleteCard))
+const renderCard = (cardInfo) => {
+    const cardElement = createCard(cardInfo, deleteCard)
+
+    return placesList.prepend(cardElement)
+}
+
+initialCards.map((card) => renderCard(card))

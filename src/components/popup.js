@@ -25,3 +25,17 @@ export const closePopup = (popup) => {
 
     popup.classList.remove('popup_is-opened')
 }
+
+export const overlayClickHandler = (evt) => {
+    if (evt.target.classList.contains('popup')) {
+        const activePopup = document.querySelector(".popup_is-opened")
+        closePopup(activePopup)
+    }
+}
+
+export const keyHandler = (evt) => {
+    if (evt.code === 'Escape') {
+        const activePopup = document.querySelector(".popup_is-opened")
+        closePopup(activePopup)
+    }
+}

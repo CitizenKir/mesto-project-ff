@@ -1,7 +1,7 @@
 import './styles/index.css';
 import {initialCards} from "./cards"
 import { createCard, deleteCard, handleLike} from "./components/card";
-import { openPopup, closePopup} from "./components/popup";
+import { openPopup, closePopup, keyHandler, overlayClickHandler} from "./components/popup";
 
 const cardTemplate = document.querySelector("#card-template").content
 const placesList = document.querySelector(".places__list")
@@ -41,20 +41,6 @@ const renderCard = (cardInfo) => {
     const cardElement = createCard(cardTemplate, cardInfo, deleteCard, handleLike, openImage)
 
     placesList.prepend(cardElement)
-}
-
-const overlayClickHandler = (evt) => {
-    if (evt.target.classList.contains('popup')) {
-        const activePopup = document.querySelector(".popup_is-opened")
-       closePopup(activePopup)
-    }
-}
-
-const keyHandler = (evt) => {
-    if (evt.code === 'Escape') {
-        const activePopup = document.querySelector(".popup_is-opened")
-        closePopup(activePopup)
-    }
 }
 
 const openImage = (evt) => {

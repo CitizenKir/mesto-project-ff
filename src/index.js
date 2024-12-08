@@ -101,6 +101,7 @@ const handleProfileEdit = (evt) => {
         .then((response) => {
             profileName.textContent = response.name
             profileDescription.textContent = response.about
+            closePopup(profileEditPopup)
         })
         .catch((error) => {
             console.error(error);
@@ -108,8 +109,6 @@ const handleProfileEdit = (evt) => {
         .finally((res) => {
             renderLoading(saveButton, false)
         })
-
-    closePopup(profileEditPopup)
 }
 
 const handleAddCard = (evt) => {
@@ -122,6 +121,8 @@ const handleAddCard = (evt) => {
     uploadCard(placeName, imageUrl)
         .then((cardResult) => {
             renderCard(cardResult, profileId)
+            formAddCard.reset()
+            closePopup(profileAddPopup)
         })
         .catch((error) => {
             console.error(error);
@@ -129,9 +130,6 @@ const handleAddCard = (evt) => {
         .finally((res) => {
             renderLoading(saveButton, false)
         })
-
-    formAddCard.reset()
-    closePopup(profileAddPopup)
 }
 
 const handleAvatarEdit = (evt) => {
@@ -143,6 +141,8 @@ const handleAvatarEdit = (evt) => {
     uploadAvatar(avatarUrl)
         .then((response) => {
             profileAvatar.style.backgroundImage = `url(${response.avatar})`
+            formAvatarEdit.reset()
+            closePopup(profileAvatarEditPopup)
         })
         .catch((error) => {
             console.error(error);
@@ -150,10 +150,6 @@ const handleAvatarEdit = (evt) => {
         .finally((res) => {
             renderLoading(saveButton, false)
         })
-
-
-    formAvatarEdit.reset()
-    closePopup(profileAvatarEditPopup)
 }
 
 profileEditButton.addEventListener('click', function () {

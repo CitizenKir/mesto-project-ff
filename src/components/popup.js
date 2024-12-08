@@ -39,11 +39,3 @@ export const keyHandler = (evt) => {
         closePopup(activePopup)
     }
 }
-
-export const renderLoading = (buttonElement, isLoading) => {
-    if (isLoading) {
-        buttonElement.textContent = 'Сохранение...'
-    } else if (isLoading === false) {
-        buttonElement.textContent = 'Сохранить'
-    }
-}

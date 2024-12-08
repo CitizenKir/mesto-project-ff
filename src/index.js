@@ -1,6 +1,6 @@
 import './styles/index.css';
 import {createCard, deleteCard, handleLike} from "./components/card";
-import {closePopup, keyHandler, openPopup, overlayClickHandler, renderLoading} from "./components/popup";
+import {closePopup, keyHandler, openPopup, overlayClickHandler} from "./components/popup";
 import {clearValidation, enableValidation} from "./components/validation";
 import {getInitialCards, getProfile, updateProfile, uploadAvatar, uploadCard} from './components/api.js'
 
@@ -51,6 +51,9 @@ Promise.all([getProfile(), getInitialCards()])
         cards.map((card) => renderCard(card, profileId))
         setProfileInfo(profile)
     })
+    .catch((error) => {
+        console.error(error);
+    })
 
 const setProfileInfo = (profile) => {
     profileName.textContent = profile.name
@@ -65,6 +68,14 @@ const validationConfig = {
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_error',
     errorClass: 'popup__input_error-text_active'
+}
+
+const renderLoading = (buttonElement, isLoading) => {
+    if (isLoading) {
+        buttonElement.textContent = 'Сохранение...'
+    } else if (isLoading === false) {
+        buttonElement.textContent = 'Сохранить'
+    }
 }
 
 const renderCard = (cardInfo, profileId) => {
@@ -91,6 +102,9 @@ const handleProfileEdit = (evt) => {
             profileName.textContent = response.name
             profileDescription.textContent = response.about
         })
+        .catch((error) => {
+            console.error(error);
+        })
         .finally((res) => {
             renderLoading(saveButton, false)
         })
@@ -109,6 +123,9 @@ const handleAddCard = (evt) => {
         .then((cardResult) => {
             renderCard(cardResult, profileId)
         })
+        .catch((error) => {
+            console.error(error);
+        })
         .finally((res) => {
             renderLoading(saveButton, false)
         })
@@ -126,6 +143,9 @@ const handleAvatarEdit = (evt) => {
     uploadAvatar(avatarUrl)
         .then((response) => {
             profileAvatar.style.backgroundImage = `url(${response.avatar})`
+        })
+        .catch((error) => {
+            console.error(error);
         })
         .finally((res) => {
             renderLoading(saveButton, false)

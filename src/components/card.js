@@ -34,8 +34,10 @@ export const createCard = (cardTemplate, cardInfo, deleteCard, likeHandler, imag
 export const deleteCard = (evt) => {
     const card = evt.target.closest(".places__item")
     deleteCardFromServer(card.id)
-
-    return card.remove()
+        .then(res => card.remove())
+        .catch((error) => {
+            console.error(error);
+        })
 }
 
 export const handleLike = (evt) => {
@@ -46,14 +48,24 @@ export const handleLike = (evt) => {
 
     if (likeButton.classList.contains('card__like-button_is-active')) {
         unlikeCard(card.id)
-        likeCountElement.textContent = likeCount - 1
+            .then(res => {
+            likeCountElement.textContent = likeCount - 1
+            evt.target.classList.toggle("card__like-button_is-active")
+        })
+            .catch((error) => {
+            console.error(error);
+        })
     } else {
         likeCard(card.id)
-        likeCountElement.textContent = likeCount + 1
+            .then(res => {
+            likeCountElement.textContent = likeCount + 1
+            evt.target.classList.toggle("card__like-button_is-active")
+        })
+            .catch((error) => {
+            console.error(error);
+        })
+
     }
-
-
-    return evt.target.classList.toggle("card__like-button_is-active")
 }
 
 const removeDeleteButton = (cardDeleteButton) => {
